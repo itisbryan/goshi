@@ -18,6 +18,10 @@ module Errors
       rescue_from Errors::Exceptions::InvalidEmailOrPassword do |e|
         failure_response(:invalid_email_or_password, 401, e.message)
       end
+
+      rescue_from Errors::Exceptions::InvalidToken do |e|
+        failure_response(:invalid_token, 401, e.message)
+      end
     end
   end
 end

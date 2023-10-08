@@ -1,3 +1,5 @@
-class HomeController < ApplicationController
-  def index; end
+class HomeController < ActionController::Base
+  def index
+    render layout: 'application'
+  end
 end
