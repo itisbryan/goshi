@@ -14,6 +14,10 @@ module Errors
       rescue_from Errors::Exceptions::InvalidParams do |e|
         failure_response(:invalid_params, 422, e.message)
       end
+
+      rescue_from Errors::Exceptions::InvalidEmailOrPassword do |e|
+        failure_response(:invalid_email_or_password, 401, e.message)
+      end
     end
   end
 end
