@@ -94,6 +94,7 @@ Metrics/BlockLength:
     - '**/*.rake'
     - 'spec/**/*.rb'
     - '**/*.gemspec'
+    - 'config/environments/*.rb'
 
 Metrics/ClassLength:
   Exclude:
