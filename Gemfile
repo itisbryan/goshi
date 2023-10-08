@@ -47,6 +47,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 gem "brakeman", "~> 6.0"
+gem 'active_model_serializers'
 
 group :development, :test do
   gem "devise", "~> 4.9"
@@ -82,3 +83,5 @@ group :test do
 end
 
 gem "annotate", "~> 3.2"
+
+gem "foreman", "~> 0.87.2"
