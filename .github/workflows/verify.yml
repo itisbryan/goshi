@@ -71,7 +71,7 @@ jobs:
           GOSHI_DATABASE_USERNAME: postgres
           GOSHI_DATABASE_PASSWORD: postgres
         run: |
-          bundle exec rails db:setup
+          bundle exec rails db:prepare
           bundle exec rails db:migrate
           bundle exec rspec spec/*
       - name: Create Coverage Artifact
