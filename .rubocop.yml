@@ -1,0 +1,146 @@
+inherit_from: .rubocop_todo.yml
+require:
+  - rubocop/cop/internal_affairs
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rake
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+    - '.git/**/*'
+    - 'bin/*'
+    - 'Gemfile'
+    - 'db/schema'
+    - 'lib/**/*'
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
+
+Naming/PredicateName:
+  # Method define macros for dynamically generated method.
+  MethodDefinitionMacros:
+    - define_method
+    - define_singleton_method
+    - def_node_matcher
+    - def_node_search
+
+Style/AccessorGrouping:
+  Exclude:
+    - lib/rubocop/formatter/base_formatter.rb
+    - lib/rubocop/cop/offense.rb
+
+Style/FormatStringToken:
+  # Because we parse a lot of source codes from strings. Percent arrays
+  # look like unannotated format string tokens to this cop.
+  Exclude:
+    - spec/**/*
+
+Style/IpAddresses:
+  # The test for this cop includes strings that would cause offenses
+  Exclude:
+    - spec/rubocop/cop/style/ip_addresses_spec.rb
+
+Layout/BlockAlignment:
+  Enabled: false
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/ClassStructure:
+  Enabled: true
+
+Layout/RedundantLineBreak:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  AllowInHeredoc: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table
+
+Layout/LineLength:
+  Max: 125
+  AutoCorrect: true
+
+Lint/InterpolationCheck:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Lint/UselessAccessModifier:
+  MethodCreatingMethods:
+    - 'def_matcher'
+    - 'def_node_matcher'
+
+Lint/EmptyFile:
+  Exclude:
+    # This file is intentionally empty to catch rubocop cops failing on empty files.
+    - spec/rubocop/intentionally_empty_file.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - '**/*.gemspec'
+
+Metrics/ClassLength:
+  Exclude:
+    - lib/rubocop/config_obsoletion.rb
+    - lib/rubocop/options.rb
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+RSpec:
+  Language:
+    Expectations:
+      - expect_autocorrect_options_for_autocorrect
+      - expect_autocorrect_options_for_autocorrect_all
+      - expect_autocorrect_options_for_fix_layout
+      - expect_correction
+      - expect_feature_loader
+      - expect_no_offenses
+      - expect_offense
+
+RSpec/PredicateMatcher:
+  EnforcedStyle: explicit
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+RSpec/NestedGroups:
+  Max: 7
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - 'Rakefile'
+    - 'spec/**/*.rb'
+
+Performance/EndWith:
+  SafeMultiline: false
+
+Performance/StartWith:
+  SafeMultiline: false
+Style/Documentation:
+  Enabled: false
+Layout/SpaceAfterColon:
+  Enabled: false

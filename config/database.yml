@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: utf-8
+  username: <%= ENV['GOSHI_DATABASE_USERNAME'] %>
+  password: <%= ENV['GOSHI_DATABASE_PASSWORD'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+development:
+  <<: *default
+  database: goshi_development
+test:
+  <<: *default
+  database: goshi_test
+production:
+  <<: *default
+  database: goshi_production

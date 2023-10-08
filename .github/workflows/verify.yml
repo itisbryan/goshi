@@ -1,0 +1,81 @@
+name: Verify
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  linters:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.1
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          gem install bundler         
+          sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+
+      - name: Install project dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Run RuboCop
+        run: bundle exec rubocop --parallel
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12.7
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: goshi_test
+          POSTGRES_PASSWORD: postgres
+        ports: [ "5432:5432" ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.1
+          bundler-cache: true
+      - name: Install dependencies
+        run: |
+          gem install bundler         
+          sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+
+      - name: Install project dependencies
+        run: bundle install --jobs 4 --retry 3
+      - name: Setup test database
+        env:
+          PGHOST: localhost
+          RAILS_ENV: test
+          POSTGRES_DB: goshi_test
+          GOSHI_DATABASE_USERNAME: postgres
+          GOSHI_DATABASE_PASSWORD: postgres
+        run: |
+          bundle exec rails db:setup
+          bundle exec rails db:migrate
+          bundle exec rspec spec/*
+      - name: Create Coverage Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage
+          path: coverage/
