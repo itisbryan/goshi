@@ -1,7 +1,7 @@
-  class GlobalStateSerializer < ActiveModel::Serializer
-    attributes :email, :first_name, :last_name, :username
+class GlobalStateSerializer < ActiveModel::Serializer
+  attributes :email, :first_name, :last_name, :username
 
-    def username
-      object&.login
-    end
+  def username
+    object&.login
   end
+end

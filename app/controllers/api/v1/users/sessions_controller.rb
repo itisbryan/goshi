@@ -4,7 +4,6 @@ module Api
   module V1
     module Users
       class SessionsController < ApplicationController
-
         def new
           redirect_to '/'
         end
