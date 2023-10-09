@@ -49,9 +49,10 @@ gem "bootsnap", require: false
 gem "brakeman", "~> 6.0"
 gem 'active_model_serializers'
 
+gem "devise", "~> 4.9"
+gem "devise-jwt"
+
 group :development, :test do
-  gem "devise", "~> 4.9"
-  gem "devise-jwt"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
   gem "rspec-rails"
