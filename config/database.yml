@@ -12,4 +12,5 @@ test:
   database: goshi_test
 production:
   <<: *default
-  database: goshi_production
+  database: goshi
+  url: <%= ENV['DATABASE_URL'] %>
