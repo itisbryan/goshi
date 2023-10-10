@@ -95,6 +95,7 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
     - '**/*.gemspec'
     - 'config/environments/*.rb'
+    - 'db/schema.rb'
 
 Metrics/ClassLength:
   Exclude:

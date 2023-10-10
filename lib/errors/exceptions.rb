@@ -6,4 +6,6 @@ module Errors::Exceptions
   class InvalidEmailOrPassword < StandardError; end
 
   class InvalidToken < StandardError; end
+
+  class InvalidResource < StandardError; end
 end

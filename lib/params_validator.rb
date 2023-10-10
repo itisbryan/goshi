@@ -10,6 +10,8 @@ class ParamsValidator
   end
 
   def build(params)
+    raise Errors::Exceptions::InvalidParams, 'Params could not be empty' unless params.present?
+
     params.permit! if params.is_a? ActionController::Parameters
 
     @validations.each do |msg, validation|
@@ -56,14 +58,14 @@ class ParamsValidator
       value = constraint[:transform].call(value) if constraint[:transform]
 
       if constraint[:type]&.none? { |k| value.is_a? k }
-        raise self.class::InvalidParams, "#{key} should be a #{constraint[:type]}, given #{value.class.name}"
+        raise self.class::InvalidParams, "#{key.upcase} should be a #{constraint[:type]}, given #{value.class.name}"
       end
 
       value = constraint[:children].build(value) if constraint[:children]
 
-      raise self.class::InvalidParams, "#{key} should be in #{constraint[:in]}" if constraint[:in]&.exclude?(value)
+      raise self.class::InvalidParams, "#{key.upcase} should be in #{constraint[:in]}" if constraint[:in]&.exclude?(value)
 
-      raise self.class::InvalidParams, "#{key} is invalid" if constraint[:validate] && !constraint[:validate].call(value)
+      raise self.class::InvalidParams, "#{key.upcase} is invalid" if constraint[:validate] && !constraint[:validate].call(value)
 
       validated_params[key] = value
     end
@@ -76,11 +78,11 @@ class ParamsValidator
 
     if options[:type]
       if options[:type].is_a? Array
-        raise ArgumentError, 'type should be an array of classes' unless options[:type].all?(Class)
+        raise ArgumentError, 'Type should be an array of classes' unless options[:type].all?(Class)
 
         @constraints[key][:type] = options[:type]
       else
-        raise ArgumentError, 'type should be a class' unless options[:type].is_a? Class
+        raise ArgumentError, 'Type should be a class' unless options[:type].is_a? Class
 
         @constraints[key][:type] = [options[:type]]
       end

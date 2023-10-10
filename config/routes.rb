@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login', to: 'users/sessions#login'
       get '/global_state', to: 'users/user_info#global_state'
+
+      resources :post_videos, only: %i[index create]
     end
   end
 end
