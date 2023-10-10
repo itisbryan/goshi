@@ -5,7 +5,7 @@ module Api
         before_action :authenticate_request!
 
         def global_state
-          success_response(GlobalStateSerializer.new(@current_user), 200, 'OK')
+          success_response(GlobalStateSerializer.new(@current_user), 201, 'Created')
         end
       end
     end

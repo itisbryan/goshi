@@ -22,6 +22,10 @@ module Errors
       rescue_from Errors::Exceptions::InvalidToken do |e|
         failure_response(:invalid_token, 401, e.message)
       end
+
+      rescue_from Errors::Exceptions::InvalidResource do |e|
+        failure_response(:invalid_resource, 422, e.message)
+      end
     end
   end
 end
