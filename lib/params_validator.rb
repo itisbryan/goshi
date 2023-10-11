@@ -51,21 +51,21 @@ class ParamsValidator
     @constraints.each do |key, constraint|
       value = params[key]
       value = value.to_h if value.is_a? ActionController::Parameters
-      raise self.class::MissingParams, "#{key} is missing" if !params.key?(key) && !constraint[:optional]
+      raise self.class::MissingParams, "#{key.capitalize} is missing" if !params.key?(key) && !constraint[:optional]
 
       next unless params.key?(key)
 
       value = constraint[:transform].call(value) if constraint[:transform]
 
       if constraint[:type]&.none? { |k| value.is_a? k }
-        raise self.class::InvalidParams, "#{key.upcase} should be a #{constraint[:type]}, given #{value.class.name}"
+        raise self.class::InvalidParams, "#{key.capitalize} should be a #{constraint[:type]}, given #{value.class.name}"
       end
 
       value = constraint[:children].build(value) if constraint[:children]
 
-      raise self.class::InvalidParams, "#{key.upcase} should be in #{constraint[:in]}" if constraint[:in]&.exclude?(value)
+      raise self.class::InvalidParams, "#{key.capitalize} should be in #{constraint[:in]}" if constraint[:in]&.exclude?(value)
 
-      raise self.class::InvalidParams, "#{key.upcase} is invalid" if constraint[:validate] && !constraint[:validate].call(value)
+      raise self.class::InvalidParams, "#{key.capitalize} is invalid" if constraint[:validate] && !constraint[:validate].call(value)
 
       validated_params[key] = value
     end

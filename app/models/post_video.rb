@@ -24,5 +24,13 @@ class PostVideo < ApplicationRecord
   validates :video_source, presence: true
   validates :title, uniqueness: true
 
-  scope :recent, -> { order(Arel.sql("date_trunc('minute', created_at) DESC")) }
+  scope :recent, -> { order(Arel.sql("date_trunc('second', created_at) DESC")) }
+
+  after_create_commit { broadcast_message }
+
+  private
+
+  def broadcast_message
+    ActionCable.server.broadcast('NotificationChannel', { message: "New video shared by #{user.login}" })
+  end
 end

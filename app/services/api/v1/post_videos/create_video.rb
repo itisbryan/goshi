@@ -25,7 +25,8 @@ module Api
           @validated_params ||= ParamsValidator.new do
             mandatory :post_video do
               mandatory :title, type: String
-              mandatory :video_source, type: String, transform: ->(val) { val.gsub!("watch?v=", "embed/").split("&").first }
+              mandatory :video_source, type: String,
+                        transform: ->(val) { val.gsub!("watch?v=", "embed/")&.split("&")&.first }
               mandatory :description, type: String
             end
           end.build(params)

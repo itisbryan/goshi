@@ -5,11 +5,10 @@ import {useNavigate} from "react-router-dom";
 import {Toastify} from "../helpers/Toastify";
 import {anonymousRequestInstance} from "../helpers/RequestInstance";
 
-const SignIn = () => {
+export default () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
     const removeForm = () => {
         setEmail('');
@@ -20,8 +19,7 @@ const SignIn = () => {
         e.preventDefault();
 
         if (email.length < 1 || password.length < 1) {
-            setErrorMessage('form could not be blank');
-            return;
+            await Toastify.fire({icon: 'error', title: 'Input could not be blank'});
         }
 
         const payload = {
@@ -70,5 +68,3 @@ const SignIn = () => {
 
     );
 }
-
-export default SignIn;
