@@ -1,63 +1,40 @@
-import React, {useEffect, useState} from "react";
-import {authenticatedRequestInstance} from "../helpers/RequestInstance";
-import {Toastify} from "../helpers/Toastify";
+import React, {useState} from "react";
 import Navbar from "./Navbar";
+import VideoList from "./VideoList";
+import Footer from "./Footer";
+import Notification from "./Notification";
 
 export default () => {
+    const [notification, setNotification] = useState('');
+    const [guid, setGuid] = useState('');
+    // const ws = new WebSocket('ws://localhost:3000/cable')
+    //
+    // ws.onopen = () => {
+    //     console.log('connection established');
+    //     setGuid(Math.random.toString(36).substring(2 ,15));
+    //
+    //     ws.send(
+    //         JSON.stringify({
+    //             command: "subscribe",
+    //             identifier: JSON.stringify({
+    //                 id: guid,
+    //                 channel: "NotificationChannel"
+    //             }),
+    //         })
+    //     )
+    // };
+    // ws.onmessage = (e) => {
+    //     const data = JSON.parse(e.data)
+    //     setNotification(data)
+    //     console.log(data)
+    // }
+
     return (<>
         <header className="sticky top-0 z-50 w-screen">
             <Navbar />
         </header>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
-        </div>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
-        </div>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
-        </div>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
-        </div>
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Hello there</h1>
-                    <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-                        exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <button className="btn btn-primary">Get Started</button>
-                </div>
-            </div>
-        </div>
-
+        <VideoList/>
+        { localStorage.getItem("token") ? <Notification channel={ "NotificationChannel" } /> : null }
+       <Footer/>
     </>)
 };
