@@ -13,7 +13,7 @@ module Api
 
         def call
           user = User.build(validated_params[:user])
-          raise Errors::Exceptions::InvalidParams, 'Some thing went wrong' unless user.save
+          user.save!
 
           GlobalStateSerializer.new(user)
         end

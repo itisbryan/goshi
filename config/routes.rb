@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   get '/login', to: 'api/v1/users/sessions#new'
+  get '/joins', to: 'api/v1/users/registration#new'
 
   namespace :api do
     namespace :v1 do

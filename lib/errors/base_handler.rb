@@ -3,7 +3,7 @@ module Errors
     extend ActiveSupport::Concern
 
     included do
-      rescue_from ActiveRecord::RecordNotFound do |e|
+      rescue_from ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid do |e|
         failure_response(:record_not_found, 422, e.message)
       end
 
