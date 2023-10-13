@@ -1,0 +1,60 @@
+version: "3.3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: goshi
+    container_name: app
+    entrypoint: ./docker-entrypoint.sh
+    tty: true
+    stdin_open: true
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - bundle:/bundle
+    environment:
+      RAILS_ENV: development
+      DB_HOST: postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: 123456a@
+      REDIS_URL: redis://redis:6379/1
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: 123456a@
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  redis:
+    image: redis:6.0.5-alpine
+    container_name: redis
+    tty: true
+    ports:
+      - '6380:6379'
+  app_test:
+    image: goshi
+    container_name: app_test
+    tty: true
+    stdin_open: true
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3001:3000"
+    volumes:
+      - .:/usr/src/app
+      - bundle:/bundle
+    environment:
+      RAILS_ENV: test
+      DB_HOST: postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: 123456a@
+      REDIS_URL: redis://redis:6379/1
+volumes:
+  bundle:
+  db_data:
