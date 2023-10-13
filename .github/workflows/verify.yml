@@ -23,6 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler         
+          sudo apt-get update -y
           sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
 
       - name: Install project dependencies
@@ -59,6 +60,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler         
+          sudo apt-get update -y
           sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
 
       - name: Install project dependencies
