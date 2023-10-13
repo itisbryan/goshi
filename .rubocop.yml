@@ -118,7 +118,16 @@ RSpec:
       - expect_offense
 
 RSpec/PredicateMatcher:
-  EnforcedStyle: explicit
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 6
+
+RSpec/RepeatedDescription:
+  Enabled: false
 
 RSpec/FilePath:
   Enabled: false
